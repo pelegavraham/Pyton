@@ -27,8 +27,8 @@ def main(args):
                 "CREATE TABLE classrooms(id INTEGER PRIMARY KEY,"
                 " location TEXT NOT NULL, current_course_id INTEGER NOT NULL, "
                 "current_course_time_left INTEGER NOT NULL)")  # create table classrooms
-            inputfilename = args[0]
-            with open(inputfilename) as inputfile:
+
+            with open(sys.argv[1], 'r') as inputfile:
                 for line in inputfile:
                     result = [x.strip() for x in line.split(',')]   #split line by comma.
                     tableName = result[0]
@@ -37,24 +37,24 @@ def main(args):
                                        (result[1], result[2], result[3], result[4], result[5], result[6]))
                     elif tableName is "S":
                         cursor.execute("INSERT INTO students VALUES (?,?)", (result[1], result[2]))
-                    else:
-                        cursor.execute("INSERT INTO classrooms VALUES (?,?)", (result[1], result[2]))
+                    elif tableName is "R":
+                        cursor.execute("INSERT INTO classrooms VALUES (?,?,0,0)", (result[1], result[2]))
 
             print("courses table: ")
             cursor.execute("SELECT * FROM courses")
             courseslist = cursor.fetchall()
-            print (print_table(courseslist))
+            print_table(courseslist)
 
             print("students table: ")
             cursor.execute("SELECT * FROM students")
             studentslist = cursor.fetchall()
-            print (print_table(studentslist))
+            print_table(studentslist)
 
             print("classrooms table: ")
             cursor.execute("SELECT * FROM classrooms")
             classroomslist = cursor.fetchall()
-            print (print_table(classroomslist))
+            print_table(classroomslist)
 
 
-if __name__ == '__main__':
-    main(sys.argv)
+#if __name__ == '__main__':
+main(sys.argv[1])
