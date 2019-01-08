@@ -8,7 +8,7 @@ def print_table(list_of_tuples):
         print(item)
 
 
-def main(args):
+def main():
 
     databaseexisted = os.path.isfile('schedule.db')
 
@@ -56,5 +56,5 @@ def main(args):
             print_table(classroomslist)
 
 
-#if __name__ == '__main__':
-main(sys.argv[1])
+if __name__ == '__main__':
+    main()
