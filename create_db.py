@@ -30,19 +30,20 @@ def main():
 
             with open(sys.argv[1], 'r') as inputfile:
                 for line in inputfile:
-                    result = [str(x.strip()) for x in line.split(',')]   #split line by comma.
+                    result = [x.strip() for x in line.split(',')]   #split line by comma.
+                    result = [str(r) for r in result]
                     tableName = result[0]
                     if tableName is "C":
                         courseName = result[1]
                         student = result[2]
                         cursor.execute("INSERT INTO courses VALUES (?,?,?,?,?,?)",
-                                       (str(courseName), str(student), result[3], result[4], result[5], result[6]))
+                                       (courseName, student, result[3], result[4], result[5], result[6]))
                     elif tableName is "S":
                         grade = result[1]
-                        cursor.execute("INSERT INTO students VALUES (?,?)", (str(grade), result[2]))
+                        cursor.execute("INSERT INTO students VALUES (?,?)", (grade, result[2]))
                     elif tableName is "R":
                         location = result[1]
-                        cursor.execute("INSERT INTO classrooms VALUES (?,?,0,0)", (str(location), result[2]))
+                        cursor.execute("INSERT INTO classrooms VALUES (?,?,?,?)", (location, result[2], 0, 0))
 
             print("courses table: ")
             cursor.execute("SELECT * FROM courses")
